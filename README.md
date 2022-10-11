@@ -1,57 +1,76 @@
 # Project Name
 
-(short, 1-3 sentenced, description of the project)
+Fully automated deployment of a multi-region Azure Spring Apps instance, with proper reverse proxy configuration with [host name preservation](https://learn.microsoft.com/azure/architecture/best-practices/host-name-preservation).
 
 ## Features
 
 This project framework provides the following features:
 
-* Feature 1
-* Feature 2
-* ...
+- Multi-region Spring Apps deployment
+- Proper reverse proxy configuration for Application Gateway and Front Door with a custom domain
+- Integration with Key Vault
 
 ## Getting Started
 
 ### Prerequisites
 
-(ideally very short, if any)
+Before you begin, make sure you have the following available:
 
-- OS
-- Library version
-- ...
+- Azure Subscription
+- with Azure Active Directory access
+- pfx certificate for your custom domain (optional)
+- GH Personal Access Token
+
+> [NOTE!]
+> There is also an option to install this infrastructure with a self-signed certificate. This certificate will be generated for you during the deployment. However, this setup should only be used in testing scenario's. Since Azure Front Door does not support self-signed certificates a host name override will take place, breaking some of the functionality of your backend applications. For production scenario's you should always apply [host name preservation](https://learn.microsoft.com/azure/architecture/best-practices/host-name-preservation).
+
+To deploy the infrastructure, you can either make use of a locally installed environment, or you can make use of a pre-configured dev container.
+
+When executing locally, make sure you have the following installed:
+
+- Terraform (latest)
+- Azure CLI (latest)
+
+When using the dev container, either make sure you have GitHub Codespaces enabled in your GitHub organization (you need at least a GitHub Teams license for this), or you can start up the dev container locally with the Visual Studio Code Remote Containers extension.
 
 ### Installation
 
-(ideally very short)
+To install this sample in your subscription:
 
-- npm install [package name]
-- mvn install
-- ...
+- review the [myvars.tfvars](tf-deploy/myvars.tfvars) file in the tf-deploy directory and update any values to reflect the environment you would like to build. See below for an explanation of the different variables you can configure.
+- execute:
 
-### Quickstart
-(Add steps to get up and running quickly)
+```bash
+GIT_REPO_PASSWORD="GH_PAT_your_created"
+CERT_PASSWORD='password_of_your_certificate'
 
-1. git clone [repository clone url]
-2. cd [repository name]
-3. ...
+cd tf-deploy
 
+az login
 
-## Demo
+terraform init -upgrade
+terraform plan -var-file="myvars.tfvars" -out=plan.tfplan var='git_repo_passwords=["$GIT_REPO_PASSWORD","$GIT_REPO_PASSWORD"]' var="cert_password=$CERT_PASSWORD"
+terraform apply -auto-approve plan.tfplan
+```
 
-A demo app is included to show how to use the project.
+### Variables
 
-To run the demo, follow these steps:
+TODO: explanation of variables
 
-(Add steps to start up the demo)
+### What you need to know about this setup
 
-1.
-2.
-3.
+TODO: more explanation on the sample
+
+### Coming up
+
+We are working on improving this sample. The ideas we have on improving:
+
+- Create Bicep templates for the same setup (in progress)
+- Make the database interchangeable for other types of databases (Cosmos DB as a first candidate)
+- Make the application backend interchangeable. This multi-region setup with reverse proxies does not only apply to Azure Spring Apps, but also to other Azure PaaS services, like Azure App Service, Azure Kubernetes Service, ...
+- Currently the apps in Azure Spring Apps are based on the Spring Petclinic sample, these apps should be better configurable.
 
 ## Resources
 
-(Any additional resources or related projects)
-
-- Link to supporting information
-- Link to similar sample
-- ...
+- [Azure Architecture Center: Multi-region Azure Spring Apps reference architecture(coming up)](article coming up)
+- [Preserve the original HTTP host name between a reverse proxy and its back-end web application](https://learn.microsoft.com/azure/architecture/best-practices/host-name-preservation)
