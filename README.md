@@ -105,7 +105,7 @@ The variables make use of a regions object. This consists of the below parts:
 
 ### What you need to know about this setup
 
-TODO: more explanation on the sample
+More info on how the terraform templates are build and how they operate can be found in the [docs](docs) folder of this repository. Best starting point is the [maintf.md](docs/maintf.md) file.
 
 ### Coming up
 
