@@ -69,6 +69,7 @@ We are working on improving this sample. The ideas we have on improving:
 - Make the database interchangeable for other types of databases (Cosmos DB as a first candidate)
 - Make the application backend interchangeable. This multi-region setup with reverse proxies does not only apply to Azure Spring Apps, but also to other Azure PaaS services, like Azure App Service, Azure Kubernetes Service, ...
 - Currently the apps in Azure Spring Apps are based on the Spring Petclinic sample, these apps should be better configurable.
+- Include multi-zone support for Azure Spring Apps.
 
 ## Resources
 
