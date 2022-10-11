@@ -1,0 +1,32 @@
+az login
+
+az login --use-device-code
+
+terraform init -upgrade
+
+terraform plan -var-file="myvars.tfvars" -out=plan.tfplan -var='git_repo_passwords=["$GIT_REPO_PASSWORD","$GIT_REPO_PASSWORD"]' -var="cert_password=$CERT_PASSWORD"
+terraform plan -var-file="myvars.tfvars" -out=plan.tfplan -var='git_repo_passwords=["$GIT_REPO_PASSWORD","$GIT_REPO_PASSWORD"]'
+
+
+terraform apply -auto-approve plan.tfplan
+
+terraform destroy -auto-approve -var-file="myvars.tfvars" -var='git_repo_passwords=["$GIT_REPO_PASSWORD","$GIT_REPO_PASSWORD"]' -var="cert_password=$CERT_PASSWORD"
+
+
+#not functioning
+#curl -k -vvl --resolve sampleapp.gittedomain-java-openlab.com:443:http://asa-multiregion-afd-ep-hmhnc0a5fygreqfc.z01.azurefd.net https://sampleapp.gittedomain-java-openlab.com
+
+#curl -k -vvl --connect-to sampleapp.gittedomain-java-openlab.com:443:asa-multiregion-afd-ep-hmhnc0a5fygreqfc.z01.azurefd.net:443 -H "Host:" https://sampleapp.gittedomain-java-openlab.com https://sampleapp.gittedomain-java-openlab.com
+
+
+[Convert]::ToBase64String([IO.File]::ReadAllBytes("C:\Users\givermei\OneDrive - Microsoft\Personal\star_givermeims_com\wildcard_givermeims_com.pfx")) > base64pfx.txt
+
+cat ../wildcard_givermeims_com.pfx | base64 > o.txt
+
+openssl pkcs12 -in ../wildcard_givermeims_com.pfx -out file.pem
+
+az keyvault certificate import --vault-name "kvdomain" -n "openlabcert" -f "../wildcard_givermeims_com3.pfx" --password $CERT_PASSWORD
+
+openssl help
+
+openssl pkcs12 -in ../wildcard_givermeims_com.pfx
