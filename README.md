@@ -77,6 +77,20 @@ terraform plan -var-file="myvars.tfvars" -out=plan.tfplan var='git_repo_password
 terraform apply -auto-approve plan.tfplan
 ```
 
+### 5. 1 extra manual step
+
+In case you are deploying this sample with a certificate signed by a certificate authority, after the Terraform is deployed to your Azure environment, there is 1 extra manual step needed to verify the custom domain that is used in Azure Front Door.
+
+If you check your Azure Front Door custom domain in the Azure Portal, you will notice the domain still needs to be verified. Terraform can only get you this far here. For verifying your custom domain, you can use a TXT record that you add to your DNS. Once you add this TXT record, the domain validity can be checked by Azure Front Door.
+
+In the Azure Portal go to your Azure Front Door service > select `Custom Domain` > Select the `Pending` message in the custom domain entry. This will show a flyout with details on the TXT record you need to add in your DNS configuration for the verification.
+
+![](../images/Screenshot%20AFD.png)
+
+Once the domain has been verified, you can connect to your application through your custom domain name.
+
+In case you are using a self-signed certificate this extra step is not needed. You connect to your application using the DNS name of your Azure Front Door service.
+
 ### Terraform Variables
 
 | param                  | Description                                                                                                                                                                                                                                                                                                          | Default value                          |
