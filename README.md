@@ -1,4 +1,4 @@
-# Project Name
+# Azure Spring Apps multi region reference architecture
 
 This sample contains a Terraform template that deploys a working sample of the Azure architecture center reference architecture: [Multi region Azure Spring Apps reference architecture (coming up)](coming up). The reference architecture and sample show how to run an Azure Spring Apps workload in a multi region configuration. This allows for higher availability of the workload as well as global presence for the workload.
 
