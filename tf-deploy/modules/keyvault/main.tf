@@ -1,3 +1,4 @@
+# TODO: azapi provider no longer used: should be deleted
 terraform {
   required_providers {
     azapi = {
@@ -142,22 +143,6 @@ resource "azurerm_key_vault_certificate" "uploaded_cert" {
     password = var.cert_password
   }
 }
-
-# resource "null_resource" "upload_cert" {
-#   count = var.use_self_signed_cert ? 0 : 1
-#   provisioner "local-exec" {
-#     command = "az keyvault certificate import --vault-name ${azurerm_key_vault.kv.name} -n ${var.cert_name} -f '${var.cert_path}' --password ${var.cert_password}"
-#   }
-# }
-
-# data "azurerm_key_vault_certificate" "uploaded_cert" {
-#   count = var.use_self_signed_cert ? 0 : 1
-#   name         = var.cert_name
-#   key_vault_id = azurerm_key_vault.kv.id
-#   depends_on = [
-#     null_resource.upload_cert
-#   ]
-# }
 
 resource "azurerm_key_vault_certificate" "self_signed_cert" {
   count = var.use_self_signed_cert ? 1 : 0
