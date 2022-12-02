@@ -19,41 +19,7 @@ provider "azurerm" {
 }
 
 locals {
-  apps = [
-    {
-      app_name = "api-gateway",
-      needs_identity = false
-      is_public = true
-      needs_custom_domain = true
-    },
-    {
-      app_name = "admin-service",
-      needs_identity = false
-      is_public = true
-      needs_custom_domain = false
-    },
-    {
-      app_name = "customers-service",
-      needs_identity = true
-      is_public = false
-      needs_custom_domain = false
-    },
-    {
-      app_name = "visits-service",
-      needs_identity = true
-      is_public = false
-      needs_custom_domain = false
-    },
-    {
-      app_name = "vets-service",
-      needs_identity = true
-      is_public = false
-      needs_custom_domain = false
-    }
-  ]
-  microservices_env = {
-    "SPRING_PROFILES_ACTIVE"     = "mysql"
-  }
+
 }
 
 module "region" {
@@ -70,8 +36,8 @@ module "region" {
   cert_password = var.cert_password
 
   config_server_git_setting = each.value.config_server_git_setting
-  apps = local.apps
-  microservices_env = local.microservices_env
+  apps = var.apps
+  environment_variables = var.environment_variables
   afd_fdid = module.afd.afd_fdid
 }
 

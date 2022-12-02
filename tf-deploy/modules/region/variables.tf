@@ -55,7 +55,7 @@ variable "apps" {
   }))
 }
 
-variable "microservices_env" {
+variable "environment_variables" {
   type = map(string)
 }
 

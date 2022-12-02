@@ -63,7 +63,7 @@ module "apps" {
   resource_group = azurerm_resource_group.rg.name
   spring_cloud_service_name = local.app_name
   is_public = var.apps[count.index].is_public
-  environment_variables = var.microservices_env
+  environment_variables = var.environment_variables
   vault_id = module.keyvault.kv_id
   needs_custom_domain = var.apps[count.index].needs_custom_domain
   dns_name = var.dns_name
