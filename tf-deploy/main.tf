@@ -36,6 +36,7 @@ module "region" {
   cert_password = var.cert_password
 
   config_server_git_setting = each.value.config_server_git_setting
+  git_repo_password = var.git_repo_passwords == null ? "" : var.git_repo_passwords[index(var.regions, each.value)]
   apps = var.apps
   environment_variables = var.environment_variables
   afd_fdid = module.afd.afd_fdid

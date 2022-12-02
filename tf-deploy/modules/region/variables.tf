@@ -46,6 +46,12 @@ variable "config_server_git_setting" {
   description = "the regions you want the Azure Spring Apps backends to be deployed to."
 }
 
+variable "git_repo_password" {
+  type = string
+  sensitive = true
+  default = ""
+}
+
 variable "apps" {
   type = list(object({
     app_name = string

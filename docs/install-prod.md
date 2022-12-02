@@ -36,7 +36,7 @@ az login
 cd tf-deploy
 
 terraform init -upgrade
-terraform plan -var-file="myvars.tfvars" -out=plan.tfplan -var='git_repo_passwords=["$GIT_REPO_PASSWORD","$GIT_REPO_PASSWORD"]' -var="cert_password=$CERT_PASSWORD"
+terraform plan -var-file="myvars.prod.tfvars" -out=plan.tfplan -var='git_repo_passwords=["$GIT_REPO_PASSWORD","$GIT_REPO_PASSWORD"]' -var="cert_password=$CERT_PASSWORD"
 terraform apply -auto-approve plan.tfplan
 ```
 
