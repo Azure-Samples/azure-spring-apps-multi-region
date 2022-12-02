@@ -3,7 +3,7 @@ regions = [{
     location-short = "weu"
     config_server_git_setting = {
       uri          = "https://github.com/spring-petclinic/spring-petclinic-microservices-config.git"
-      label        = "weu"
+      label        = "master"
       http_basic_auth = {
         username = "your-github-username"
       }
@@ -14,17 +14,17 @@ regions = [{
     location-short = "eus"
     config_server_git_setting = {
       uri          = "https://github.com/spring-petclinic/spring-petclinic-microservices-config.git"
-      label        = "eus"
+      label        = "master"
       http_basic_auth = {
         username = "your-github-username"
       }
     }
 }]
 
-dns_name = "sampleapp.yourdomain.com"
+dns_name = "sampleapp.givermeims.com"
 
 use_self_signed_cert = false
-cert_path = "../wildcard_yourdomain_com3.pfx"
+cert_path = "../wildcard_givermeims_com3.pfx"
 
 apps = [
   {

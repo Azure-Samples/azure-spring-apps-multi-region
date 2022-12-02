@@ -3,7 +3,7 @@ regions = [{
     location-short = "weu"
     config_server_git_setting = {
       uri          = "https://github.com/spring-petclinic/spring-petclinic-microservices-config.git"
-      label        = "weu"
+      label        = "master"
     }
   },
   {
@@ -11,7 +11,7 @@ regions = [{
     location-short = "eus"
     config_server_git_setting = {
       uri          = "https://github.com/spring-petclinic/spring-petclinic-microservices-config.git"
-      label        = "eus"
+      label        = "master"
     }
 }]
 

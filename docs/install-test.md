@@ -31,3 +31,19 @@ terraform init -upgrade
 terraform plan -var-file="myvars.test.tfvars" -out=plan.tfplan
 terraform apply -auto-approve plan.tfplan
 ```
+
+## 5. Test your setup
+
+You can test your setup by going to your app through your Front door URL in the browser. You should see the "Hurray~Your app is up and running!" page. 
+
+## 6. Extra: Deploying the Spring Petclinic application
+
+In case you want to deploy the spring petclinic micorservices application to your Spring Apps instances, use the guidance in [deploy-app.md](deploy-app.md)
+
+## 7. Cleanup
+
+To remove all the resources you have set up, run the below statement: 
+
+```bash
+terraform destroy
+```

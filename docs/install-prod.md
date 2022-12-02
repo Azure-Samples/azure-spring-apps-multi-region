@@ -54,6 +54,21 @@ Once the domain has been verified, you can connect to your application through y
 
 In case you are using a self-signed certificate this extra step is not needed. You connect to your application using the DNS name of your Azure Front Door service.
 
+## 6. Test your setup
+
+You can test your setup by going to your app through your custom domain in the browser. You should see the "Hurray~Your app is up and running!" page. 
+
+## 7. Extra: Deploying the Spring Petclinic application
+
+In case you want to deploy the spring petclinic micorservices application to your Spring Apps instances, use the guidance in [deploy-app.md](deploy-app.md)
+
+## 8. Cleanup
+
+To remove all the resources you have set up, run the below statement: 
+
+```bash
+terraform destroy
+```
 
 ## Additional prerequisites
 ### Set up Git PAT
