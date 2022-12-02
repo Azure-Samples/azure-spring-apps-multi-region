@@ -15,15 +15,7 @@ terraform {
       source  = "hashicorp/azuread"
       version = "~> 2.15.0"
     }
-    azapi = {
-      source  = "Azure/azapi"
-      version = "0.4.0"
-    }
   }
-}
-
-provider "azapi" {
-
 }
 
 # Configure the Microsoft Azure Provider
