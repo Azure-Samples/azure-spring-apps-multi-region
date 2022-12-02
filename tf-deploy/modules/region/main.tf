@@ -21,10 +21,7 @@ module "springapps_svc" {
   location = var.location
   app_subnet_id = module.vnet.app_subnet_id
   svc_subnet_id = module.vnet.svc_subnet_id
-  git_repo_uri = var.git_repo_uri
-  git_repo_branch = var.git_repo_branch
-  git_repo_username = var.git_repo_username
-  git_repo_password = var.git_repo_password
+  config_server_git_setting = var.config_server_git_setting
   virtual_network_id = module.vnet.vnet_id
   cert_id = module.keyvault.cert_id
   cert_name = var.cert_name

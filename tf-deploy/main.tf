@@ -10,15 +10,7 @@ terraform {
       source  = "hashicorp/azuread"
       version = "~> 2.15.0"
     }
-    azapi = {
-      source  = "Azure/azapi"
-      version = "0.4.0"
-    }
   }
-}
-
-provider "azapi" {
-
 }
 
 # Configure the Microsoft Azure Provider
@@ -77,10 +69,7 @@ module "region" {
   cert_path = var.cert_path
   cert_password = var.cert_password
 
-  git_repo_uri = each.value.git_repo_uri
-  git_repo_branch = each.value.git_repo_branch
-  git_repo_username = each.value.git_repo_username
-  git_repo_password = var.git_repo_passwords[index(var.regions, each.value)]
+  config_server_git_setting = each.value.config_server_git_setting
   apps = local.apps
   microservices_env = local.microservices_env
   afd_fdid = module.afd.afd_fdid

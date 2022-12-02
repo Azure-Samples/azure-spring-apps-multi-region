@@ -24,7 +24,7 @@ Before you begin, make sure you have the following available:
 - Azure Subscription with Contributor access
 - Azure Active Directory access
 - pfx certificate for your custom domain (optional)
-- GitHub Personal Access Token
+- GitHub Personal Access Token (optional)
 
 > [NOTE!]
 > There is also an option to install this infrastructure with a self-signed certificate. This certificate will be generated for you during the deployment. However, this setup should only be used in testing scenario's.

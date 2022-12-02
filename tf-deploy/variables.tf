@@ -8,9 +8,13 @@ variable "regions" {
   type = list(object({
     location = string
     location-short = string
-    git_repo_uri = string
-    git_repo_branch = string
-    git_repo_username = string
+    config_server_git_setting = object({
+      uri          = string
+      label        = optional(string)
+      http_basic_auth = optional(object ({
+        username = string
+      }))
+    })
   }))
   description = "the regions you want the Azure Spring Apps backends to be deployed to."
 }
@@ -18,6 +22,7 @@ variable "regions" {
 variable "git_repo_passwords" {
   type = list(string)
   sensitive = true
+  default = null
 }
 
 variable "dns_name" {
