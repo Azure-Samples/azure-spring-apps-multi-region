@@ -13,7 +13,7 @@ variable "regions" {
       label        = optional(string)
       http_basic_auth = optional(object ({
         username = string
-      }))
+      }), {username = ""})
     })
   }))
   description = "the regions you want the Azure Spring Apps backends to be deployed to."

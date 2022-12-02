@@ -1,12 +1,3 @@
-terraform {
-  required_providers {
-    azapi = {
-      source  = "Azure/azapi"
-      version = "0.4.0"
-    }
-  }
-}
-
 resource "azurerm_cdn_frontdoor_profile" "profile" {
   name                = "${var.app_name}-afd"
   resource_group_name = var.resource_group
