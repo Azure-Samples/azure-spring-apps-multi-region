@@ -19,13 +19,17 @@ provider "azurerm" {
 }
 
 locals {
+  application_name = "${var.application_name}-${lower(random_id.randomval.hex)}"
+}
 
+resource "random_id" "randomval" {
+  byte_length = 6
 }
 
 module "region" {
   source = "./modules/region"
   for_each = {for i, r in var.regions:  i => r}
-  application_name = var.application_name
+  application_name = local.application_name
   location = each.value.location
   location-short = each.value.location-short
 
@@ -43,13 +47,13 @@ module "region" {
 }
 
 resource "azurerm_resource_group" "rg" {
-  name = "${var.application_name}-shared"
+  name = "${local.application_name}-shared"
   location = var.shared_location
 }
 
 module "afd" {
   source = "./modules/global_lb"
-  app_name = var.application_name
+  app_name = local.application_name
   resource_group = azurerm_resource_group.rg.name
   dns_name = var.dns_name
   backends = [for i, r in var.regions : module.region[i].appgw_ip]
