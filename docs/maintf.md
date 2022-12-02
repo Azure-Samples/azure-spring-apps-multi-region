@@ -26,60 +26,15 @@ provider "azurerm" {
 
 ## locals
 
-The file also contains 2 local variables.
+The file also contains 1 local variable.
 
 ```terraform
 locals {
-  apps = [
-    {
-      app_name = "api-gateway",
-      needs_identity = false
-      is_public = true
-      needs_custom_domain = true
-    },
-    {
-      app_name = "admin-service",
-      needs_identity = false
-      is_public = true
-      needs_custom_domain = false
-    },
-    {
-      app_name = "customers-service",
-      needs_identity = true
-      is_public = false
-      needs_custom_domain = false
-    },
-    {
-      app_name = "visits-service",
-      needs_identity = true
-      is_public = false
-      needs_custom_domain = false
-    },
-    {
-      app_name = "vets-service",
-      needs_identity = true
-      is_public = false
-      needs_custom_domain = false
-    }
-  ]
-  microservices_env = {
-    "SPRING_PROFILES_ACTIVE"     = "mysql"
-  }
+  application_name = "${var.application_name}-${lower(random_string.rand-name.result)}"
 }
 ```
 
-The apps local defines different apps that will be deployed to the Spring Apps service in each region you deploy to. Each app has:
-
-- `app_name`: name of the application in Spring Apps
-- `needs_identity`: defines whether a managed identity for the app will be created. This can be used when connecting to other services like Key Vault.
-- `is_public`: defines whether this app is a spring cloud api-gateway. Currently the template only supports 1 app as a gateway.
-- `needs_custom_domain`: defines whether this is the app where your custom domain needs to be configured. The endpoint to this app will be used as a backend for the Application Gateway service.
-
-In the sample local variable, the api-gateway is configured with `is_public` and `needs_custom_domain` set to `true`. This means the applications will be exposed through Application Gateway through the api-gateway app in Spring Apps.
-
-The `admin-service` however is only configured with `is_public` set to true. This app will only be accessible within the virtual network and not through the Application Gateway.
-
-The `microservices_env` local value is an extra environment value that gets set on each spring app. Basically this prepares this sample for deploying the [spring petclinic microservices](https://github.com/spring-petclinic/spring-petclinic-microservices) application to this Spring Apps instance.
+The `application_name` is a concatenation of your application_name and a random string value.
 
 ## Region module
 
@@ -89,7 +44,7 @@ For each region you configured in your [tfvars](../tf-deploy/myvars.tfvars) file
 module "region" {
   source = "./modules/region"
   for_each = {for i, r in var.regions:  i => r}
-  application_name = var.application_name
+  application_name = local.application_name
   location = each.value.location
   location-short = each.value.location-short
 
@@ -99,12 +54,10 @@ module "region" {
   cert_path = var.cert_path
   cert_password = var.cert_password
 
-  git_repo_uri = each.value.git_repo_uri
-  git_repo_branch = each.value.git_repo_branch
-  git_repo_username = each.value.git_repo_username
-  git_repo_password = var.git_repo_passwords[index(var.regions, each.value)]
-  apps = local.apps
-  microservices_env = local.microservices_env
+  config_server_git_setting = each.value.config_server_git_setting
+  git_repo_password = var.git_repo_passwords == null ? "" : var.git_repo_passwords[index(var.regions, each.value)]
+  apps = var.apps
+  environment_variables = var.environment_variables
   afd_fdid = module.afd.afd_fdid
 }
 ```
