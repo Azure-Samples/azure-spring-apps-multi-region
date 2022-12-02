@@ -19,11 +19,15 @@ provider "azurerm" {
 }
 
 locals {
-  application_name = "${var.application_name}-${lower(random_id.randomval.hex)}"
+  application_name = "${var.application_name}-${lower(random_string.rand-name.result)}"
 }
 
-resource "random_id" "randomval" {
-  byte_length = 6
+resource "random_string" "rand-name" {
+  length  = 5
+  upper   = false
+  numeric  = false
+  lower   = true
+  special = false
 }
 
 module "region" {

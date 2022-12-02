@@ -52,8 +52,6 @@ In the Azure Portal go to your Azure Front Door service > select `Custom Domain`
 
 Once the domain has been verified, you can connect to your application through your custom domain name.
 
-In case you are using a self-signed certificate this extra step is not needed. You connect to your application using the DNS name of your Azure Front Door service.
-
 ## 6. Test your setup
 
 You can test your setup by going to your app through your custom domain in the browser. You should see the "Hurray~Your app is up and running!" page. 
@@ -67,7 +65,7 @@ In case you want to deploy the spring petclinic micorservices application to you
 To remove all the resources you have set up, run the below statement: 
 
 ```bash
-terraform destroy
+terraform destroy -var-file="myvars.prod.tfvars" -var='git_repo_passwords=["$GIT_REPO_PASSWORD","$GIT_REPO_PASSWORD"]' -var="cert_password=$CERT_PASSWORD"
 ```
 
 ## Additional prerequisites

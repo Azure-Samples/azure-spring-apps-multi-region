@@ -21,10 +21,10 @@ regions = [{
     }
 }]
 
-dns_name = "sampleapp.givermeims.com"
+dns_name = "sampleapp.yourdomain.com"
 
 use_self_signed_cert = false
-cert_path = "../wildcard_givermeims_com3.pfx"
+cert_path = "../wildcard_yourdomain_com.pfx"
 
 apps = [
   {
