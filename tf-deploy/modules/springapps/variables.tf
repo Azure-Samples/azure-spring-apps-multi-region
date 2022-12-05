@@ -23,22 +23,21 @@ variable "svc_subnet_id" {
   type = string
 }
 
-variable "git_repo_uri" {
-  type = string
-}
-
-variable "git_repo_branch" {
-  type = string
-  default = "main"
-}
-
-variable "git_repo_username" {
-  type = string
+variable "config_server_git_setting" {
+  type = object ({
+    uri          = string
+    label        = optional(string)
+    http_basic_auth = optional(object({
+      username = string
+    }))
+  })
+  description = "the regions you want the Azure Spring Apps backends to be deployed to."
 }
 
 variable "git_repo_password" {
   type = string
   sensitive = true
+  default = ""
 }
 
 variable "virtual_network_id" {

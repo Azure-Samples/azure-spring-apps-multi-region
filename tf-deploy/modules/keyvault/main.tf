@@ -1,13 +1,3 @@
-# TODO: azapi provider no longer used: should be deleted
-terraform {
-  required_providers {
-    azapi = {
-      source  = "Azure/azapi"
-      version = "0.4.0"
-    }
-  }
-}
-
 data "azurerm_client_config" "current" {}
 
 data "azuread_service_principal" "asa-id" {

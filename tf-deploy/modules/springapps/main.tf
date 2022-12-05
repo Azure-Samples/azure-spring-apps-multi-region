@@ -10,11 +10,15 @@ resource "azurerm_spring_cloud_service" "asa" {
   location = var.location
   
   config_server_git_setting {
-    uri          = var.git_repo_uri
-    label        = var.git_repo_branch
-    http_basic_auth {
-      username = var.git_repo_username
-      password = var.git_repo_password
+    uri          = var.config_server_git_setting.uri
+    label        = var.config_server_git_setting.label
+
+    dynamic http_basic_auth {
+      for_each = var.config_server_git_setting.http_basic_auth.username == "" ? [] : [1]
+      content {
+        username = var.config_server_git_setting.http_basic_auth.username
+        password = var.git_repo_password
+      }
     }
   }
 }

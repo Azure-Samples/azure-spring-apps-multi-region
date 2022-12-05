@@ -10,15 +10,7 @@ terraform {
       source  = "hashicorp/azuread"
       version = "~> 2.15.0"
     }
-    azapi = {
-      source  = "Azure/azapi"
-      version = "0.4.0"
-    }
   }
-}
-
-provider "azapi" {
-
 }
 
 # Configure the Microsoft Azure Provider
@@ -27,47 +19,21 @@ provider "azurerm" {
 }
 
 locals {
-  apps = [
-    {
-      app_name = "api-gateway",
-      needs_identity = false
-      is_public = true
-      needs_custom_domain = true
-    },
-    {
-      app_name = "admin-service",
-      needs_identity = false
-      is_public = true
-      needs_custom_domain = false
-    },
-    {
-      app_name = "customers-service",
-      needs_identity = true
-      is_public = false
-      needs_custom_domain = false
-    },
-    {
-      app_name = "visits-service",
-      needs_identity = true
-      is_public = false
-      needs_custom_domain = false
-    },
-    {
-      app_name = "vets-service",
-      needs_identity = true
-      is_public = false
-      needs_custom_domain = false
-    }
-  ]
-  microservices_env = {
-    "SPRING_PROFILES_ACTIVE"     = "mysql"
-  }
+  application_name = "${var.application_name}-${lower(random_string.rand-name.result)}"
+}
+
+resource "random_string" "rand-name" {
+  length  = 5
+  upper   = false
+  numeric  = false
+  lower   = true
+  special = false
 }
 
 module "region" {
   source = "./modules/region"
   for_each = {for i, r in var.regions:  i => r}
-  application_name = var.application_name
+  application_name = local.application_name
   location = each.value.location
   location-short = each.value.location-short
 
@@ -77,23 +43,21 @@ module "region" {
   cert_path = var.cert_path
   cert_password = var.cert_password
 
-  git_repo_uri = each.value.git_repo_uri
-  git_repo_branch = each.value.git_repo_branch
-  git_repo_username = each.value.git_repo_username
-  git_repo_password = var.git_repo_passwords[index(var.regions, each.value)]
-  apps = local.apps
-  microservices_env = local.microservices_env
+  config_server_git_setting = each.value.config_server_git_setting
+  git_repo_password = var.git_repo_passwords == null ? "" : var.git_repo_passwords[index(var.regions, each.value)]
+  apps = var.apps
+  environment_variables = var.environment_variables
   afd_fdid = module.afd.afd_fdid
 }
 
 resource "azurerm_resource_group" "rg" {
-  name = "${var.application_name}-shared"
+  name = "${local.application_name}-shared"
   location = var.shared_location
 }
 
 module "afd" {
   source = "./modules/global_lb"
-  app_name = var.application_name
+  app_name = local.application_name
   resource_group = azurerm_resource_group.rg.name
   dns_name = var.dns_name
   backends = [for i, r in var.regions : module.region[i].appgw_ip]

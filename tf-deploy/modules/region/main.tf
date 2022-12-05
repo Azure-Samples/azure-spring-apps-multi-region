@@ -21,9 +21,7 @@ module "springapps_svc" {
   location = var.location
   app_subnet_id = module.vnet.app_subnet_id
   svc_subnet_id = module.vnet.svc_subnet_id
-  git_repo_uri = var.git_repo_uri
-  git_repo_branch = var.git_repo_branch
-  git_repo_username = var.git_repo_username
+  config_server_git_setting = var.config_server_git_setting
   git_repo_password = var.git_repo_password
   virtual_network_id = module.vnet.vnet_id
   cert_id = module.keyvault.cert_id
@@ -66,7 +64,7 @@ module "apps" {
   resource_group = azurerm_resource_group.rg.name
   spring_cloud_service_name = local.app_name
   is_public = var.apps[count.index].is_public
-  environment_variables = var.microservices_env
+  environment_variables = var.environment_variables
   vault_id = module.keyvault.kv_id
   needs_custom_domain = var.apps[count.index].needs_custom_domain
   dns_name = var.dns_name
