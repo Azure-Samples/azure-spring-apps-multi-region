@@ -13,6 +13,14 @@ variable "location-short" {
   description = "The short name of the Azure region where all resources in this example should be created in. Used for creating unique resource names"
 }
 
+variable "enterprise" {
+  type = object({
+    enabled = bool
+    service_registry_enabled = bool
+  })
+  description = "When true deploys enterprise SKU in all regions"
+}
+
 variable "dns_name" {
   type = string
 }

@@ -21,6 +21,11 @@ resource "azurerm_spring_cloud_service" "asa" {
       }
     }
   }
+
+  trace {
+    connection_string = var.appinsights
+    sample_rate       = 10.0
+  }
 }
 
 # Gets the Azure Spring Apps internal load balancer IP address once it is deployed
