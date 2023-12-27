@@ -44,10 +44,10 @@ When using the dev container, either make sure you have [GitHub Codespaces](http
 
 This sample can be set up in a test or a non-test setup and for Standard or Enterprise SKU.
 
-- [test set up, Standard SKU]: In this case the Git PAT token is optional and a self-signed certificate is used. Walkthrough of this setup is found in the [install-test-standard.md](docs/install-test-standard.md) file.
-- [test set up, Enterprise SKU]: In this case the Git PAT token is optional and a self-signed certificate is used. Walkthrough of this setup is found in the [install-test-enterprise.md](docs/install-test-enterprise.md) file.
-- [non-test set up, Standard SKU]: In this case the Git PAT token is mandatory and a pfx certificate for your custom domain is used. Walkthrough of this setup is found in the [install-prod-standard.md](docs/install-prod-standard.md) file.
-- [non-test set up, Enterprise SKU]: In this case the Git PAT token is mandatory and a pfx certificate for your custom domain is used. Walkthrough of this setup is found in the [install-prod-enterprise.md](docs/install-prod-enterprise.md) file.
+- **test set up, Standard SKU**: In this case the Git PAT token is optional and a self-signed certificate is used. Walkthrough of this setup is found in the [install-test-standard.md](docs/install-test-standard.md) file.
+- **test set up, Enterprise SKU**: In this case the Git PAT token is optional and a self-signed certificate is used. Walkthrough of this setup is found in the [install-test-enterprise.md](docs/install-test-enterprise.md) file.
+- **production set up, Standard SKU**: In this case the Git PAT token is mandatory and a pfx certificate for your custom domain is used. Walkthrough of this setup is found in the [install-prod-standard.md](docs/install-prod-standard.md) file.
+- **production set up, Enterprise SKU**: In this case the Git PAT token is mandatory and a pfx certificate for your custom domain is used. Walkthrough of this setup is found in the [install-prod-enterprise.md](docs/install-prod-enterprise.md) file.
 
 
 ### What you need to know about this setup
@@ -66,5 +66,5 @@ We are working on improving this sample. The ideas we have on improving:
 
 ## Resources
 
-- [Azure Architecture Center: Multi-region Azure Spring Apps reference architecture(coming up)](article coming up)
+- [Azure Architecture Center: Multi-region Azure Spring Apps reference architecture](https://learn.microsoft.com/azure/architecture/web-apps/spring-apps/architectures/spring-apps-multi-region)
 - [Preserve the original HTTP host name between a reverse proxy and its back-end web application](https://learn.microsoft.com/azure/architecture/best-practices/host-name-preservation)
