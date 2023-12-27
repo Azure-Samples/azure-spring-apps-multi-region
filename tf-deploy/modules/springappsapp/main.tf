@@ -16,7 +16,7 @@ resource "azurerm_spring_cloud_java_deployment" "deployment" {
   name                = "default"
   spring_cloud_app_id = azurerm_spring_cloud_app.app.id
   instance_count      = 1
-  runtime_version     = "Java_8"
+  runtime_version     = "Java_17"
 
   quota {
     cpu    = "1"

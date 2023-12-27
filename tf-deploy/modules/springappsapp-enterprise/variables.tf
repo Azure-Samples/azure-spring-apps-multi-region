@@ -15,6 +15,10 @@ variable "spring_cloud_service_name" {
   type = string
 }
 
+variable "asa_config_svc_id" {
+  type = string
+}
+
 variable "is_public" {
   type = string
 }

@@ -104,7 +104,7 @@ module "apps" {
 }
 
 module "apps-enterprise" {
-  source = "../springappsapp"
+  source = "../springappsapp-enterprise"
   count = var.enterprise.enabled ? length(var.apps) : 0
   needs_identity = var.apps[count.index].needs_identity
   app_name = var.apps[count.index].app_name
@@ -117,6 +117,7 @@ module "apps-enterprise" {
   dns_name = var.dns_name
   cert_name = var.cert_name
   thumbprint = module.springapps_enterprise_svc[0].thumbprint
+  asa_config_svc_id = module.springapps_enterprise_svc[0].asa_config_svc_id
   depends_on = [
     module.springapps_enterprise_svc
   ]
