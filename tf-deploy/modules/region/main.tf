@@ -83,7 +83,7 @@ module "keyvault" {
 
 module "apps" {
   source = "../springappsapp"
-  count = var.enterprise.enabled ? 0 : length(var.apps)
+  count = length(var.apps)
   needs_identity = var.apps[count.index].needs_identity
   app_name = var.apps[count.index].app_name
   resource_group = azurerm_resource_group.rg.name
@@ -94,30 +94,32 @@ module "apps" {
   needs_custom_domain = var.apps[count.index].needs_custom_domain
   dns_name = var.dns_name
   cert_name = var.cert_name
-  thumbprint = module.springapps_svc.thumbprint
-  depends_on = [
+  thumbprint = var.enterprise.enabled ? module.springapps_enterprise_svc.thumbprint : module.springapps_svc.thumbprint
+  depends_on = var.enterprise.enabled ?  [
+    module.springapps_enterprise_svc
+  ] : [
     module.springapps_svc
   ]
 }
 
-module "apps-enterprise" {
-  source = "../springappsapp-enterprise"
-  count = var.enterprise.enabled ? length(var.apps) : 0
-  needs_identity = var.apps[count.index].needs_identity
-  app_name = var.apps[count.index].app_name
-  resource_group = azurerm_resource_group.rg.name
-  spring_cloud_service_name = local.app_name
-  is_public = var.apps[count.index].is_public
-  environment_variables = var.environment_variables
-  vault_id = module.keyvault.kv_id
-  needs_custom_domain = var.apps[count.index].needs_custom_domain
-  dns_name = var.dns_name
-  cert_name = var.cert_name
-  thumbprint = module.springapps_enterprise_svc.thumbprint
-  depends_on = [
-    module.springapps_enterprise_svc
-  ]
-}
+# module "apps-enterprise" {
+#   source = "../springappsapp-enterprise"
+#   count = var.enterprise.enabled ? length(var.apps) : 0
+#   needs_identity = var.apps[count.index].needs_identity
+#   app_name = var.apps[count.index].app_name
+#   resource_group = azurerm_resource_group.rg.name
+#   spring_cloud_service_name = local.app_name
+#   is_public = var.apps[count.index].is_public
+#   environment_variables = var.environment_variables
+#   vault_id = module.keyvault.kv_id
+#   needs_custom_domain = var.apps[count.index].needs_custom_domain
+#   dns_name = var.dns_name
+#   cert_name = var.cert_name
+#   thumbprint = module.springapps_enterprise_svc.thumbprint
+#   depends_on = [
+#     module.springapps_enterprise_svc
+#   ]
+# }
 
 module "appgw" {
   source = "../appgw"

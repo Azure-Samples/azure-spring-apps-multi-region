@@ -47,34 +47,28 @@ resource "azurerm_spring_cloud_builder" "asa_builder" {
   }
 }
 
-# Configure Gateway for ASA (TODO --> prefer 1 big config object variable???)
-resource "azurerm_spring_cloud_gateway" "asa_gateway" {
-  name                    = "default"
-  spring_cloud_service_id = azurerm_spring_cloud_service.asa_service.id
-  # api_metadata {
-  #   description = var.spring_cloud_gateway_setting.description
-  #   title       = var.spring_cloud_gateway_setting.title
-  #   version     = var.spring_cloud_gateway_setting.version
-  # }
-  cors {
-    allowed_origins = ["*"]
-  }
-  # sso {
-  #   client_id     = var.sso-client-id
-  #   client_secret = var.sso-client-secret
-  #   issuer_uri    = var.sso-issuer-uri
-  #   scope         = var.sso-scope
-  # }
+# Configure Gateway for ASA (let's do it for now without)
+# resource "azurerm_spring_cloud_gateway" "asa_gateway" {
+#   name                    = "default"
+#   spring_cloud_service_id = azurerm_spring_cloud_service.asa_service.id
 
-  public_network_access_enabled = true
-  instance_count                = 2
-}
+#   application_performance_monitoring_types = "ApplicationInsights"
+
+#   https_only = false
+#   public_network_access_enabled = false
+
+#   cors {
+#     allowed_origins = ["*"]
+#   }
+
+#   instance_count                = 2
+# }
 
 # TODO
-resource "azurerm_spring_cloud_api_portal" "asa_api" {
-  name                    = "default"
-  spring_cloud_service_id = azurerm_spring_cloud_service.asa_service.id
-  gateway_ids             = [azurerm_spring_cloud_gateway.asa_gateway.id]
+# resource "azurerm_spring_cloud_api_portal" "asa_api" {
+#   name                    = "default"
+#   spring_cloud_service_id = azurerm_spring_cloud_service.asa_service.id
+#   gateway_ids             = [azurerm_spring_cloud_gateway.asa_gateway.id]
   # sso {
   #   client_id     = var.sso-client-id
   #   client_secret = var.sso-client-secret
@@ -82,8 +76,8 @@ resource "azurerm_spring_cloud_api_portal" "asa_api" {
   #   scope         = var.sso-scope
   # }
 
-  public_network_access_enabled = true
-}
+#   public_network_access_enabled = true
+# }
 
 # Gets the Azure Spring Apps internal load balancer IP address once it is deployed
 data "azurerm_lb" "asc_internal_lb" {
