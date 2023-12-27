@@ -9,3 +9,7 @@ variable "asa_name" {
 variable "location" {
   type = string
 }
+
+variable "asa_service_id" {
+  type = string
+}

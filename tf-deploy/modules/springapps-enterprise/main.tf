@@ -9,8 +9,8 @@ resource "azurerm_spring_cloud_service" "asa" {
   sku_name = "E0"
   location = var.location
   
-  service_registry_enabled = var.enterprise.service_registry_enabled
-  build_agent_pool_size = var.enterprise.build_agent_pool_size
+  service_registry_enabled = var.service_registry_enabled
+  build_agent_pool_size = var.build_agent_pool_size
 
   trace {
     connection_string = var.appinsights
@@ -20,7 +20,7 @@ resource "azurerm_spring_cloud_service" "asa" {
 
 resource "azurerm_spring_cloud_configuration_service" "asa_config_svc" {
   name                    = "default"
-  spring_cloud_service_id = azurerm_spring_cloud_service.asa_service.id
+  spring_cloud_service_id = azurerm_spring_cloud_service.asa.id
 
   repository {
     name     = var.config_server_git_setting.name
@@ -36,7 +36,7 @@ resource "azurerm_spring_cloud_configuration_service" "asa_config_svc" {
 # Configure Tanzu Build Service for ASA
 resource "azurerm_spring_cloud_builder" "asa_builder" {
   name                    = "no-bindings-builder"
-  spring_cloud_service_id = azurerm_spring_cloud_service.asa_service.id
+  spring_cloud_service_id = azurerm_spring_cloud_service.asa.id
   build_pack_group {
     name           = "default"
     build_pack_ids = ["tanzu-buildpacks/nodejs", "tanzu-buildpacks/dotnet-core", "tanzu-buildpacks/go", "tanzu-buildpacks/python"]

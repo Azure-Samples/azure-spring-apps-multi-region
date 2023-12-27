@@ -16,7 +16,7 @@ resource "azurerm_application_insights" "asa_app_insights" {
 
 resource "azurerm_monitor_diagnostic_setting" "asa_diagnostic" {
   name                       = "${var.asa_name}-diagnostic"
-  target_resource_id         = azurerm_spring_cloud_service.asa_service.id
+  target_resource_id         = var.asa_service_id
   log_analytics_workspace_id = azurerm_log_analytics_workspace.asa_workspace.id
 
   enabled_log {

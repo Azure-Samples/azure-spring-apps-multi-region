@@ -29,6 +29,7 @@ variable "appinsights" {
 
 variable "config_server_git_setting" {
   type = object ({
+    name         = string
     uri          = string
     label        = optional(string)
     http_basic_auth = optional(object({

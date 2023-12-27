@@ -29,11 +29,13 @@ variable "appinsights" {
 
 variable "config_server_git_setting" {
   type = object ({
+    name         = string
     uri          = string
     label        = optional(string)
     http_basic_auth = optional(object({
       username = string
     }))
+    patterns     = list(string) 
   })
   description = "the regions you want the Azure Spring Apps backends to be deployed to."
 }
@@ -53,5 +55,13 @@ variable "cert_id" {
 }
 
 variable "cert_name" {
+  type = string
+}
+
+variable "service_registry_enabled" {
+  type = bool
+}
+
+variable "build_agent_pool_size" {
   type = string
 }

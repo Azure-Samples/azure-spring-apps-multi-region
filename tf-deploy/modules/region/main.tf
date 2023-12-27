@@ -19,6 +19,7 @@ module "monitoring" {
   asa_name = local.app_name
   resource_group = azurerm_resource_group.rg.name
   location = var.location
+  asa_service_id = var.enterprise.enabled ? module.springapps_enterprise_svc.service_id : module.springapps_svc.service_id
 }
 
 module "springapps_svc" {
@@ -51,6 +52,8 @@ module "springapps_enterprise_svc" {
   virtual_network_id = module.vnet.vnet_id
   cert_id = module.keyvault.cert_id
   cert_name = var.cert_name
+  service_registry_enabled = var.enterprise.service_registry_enabled
+  build_agent_pool_size = var.enterprise.build_agent_pool_size
 }
 
 module "database" {
@@ -94,32 +97,30 @@ module "apps" {
   needs_custom_domain = var.apps[count.index].needs_custom_domain
   dns_name = var.dns_name
   cert_name = var.cert_name
-  thumbprint = var.enterprise.enabled ? module.springapps_enterprise_svc.thumbprint : module.springapps_svc.thumbprint
-  depends_on = var.enterprise.enabled ?  [
-    module.springapps_enterprise_svc
-  ] : [
+  thumbprint = module.springapps_svc.thumbprint
+  depends_on = [
     module.springapps_svc
   ]
 }
 
-# module "apps-enterprise" {
-#   source = "../springappsapp-enterprise"
-#   count = var.enterprise.enabled ? length(var.apps) : 0
-#   needs_identity = var.apps[count.index].needs_identity
-#   app_name = var.apps[count.index].app_name
-#   resource_group = azurerm_resource_group.rg.name
-#   spring_cloud_service_name = local.app_name
-#   is_public = var.apps[count.index].is_public
-#   environment_variables = var.environment_variables
-#   vault_id = module.keyvault.kv_id
-#   needs_custom_domain = var.apps[count.index].needs_custom_domain
-#   dns_name = var.dns_name
-#   cert_name = var.cert_name
-#   thumbprint = module.springapps_enterprise_svc.thumbprint
-#   depends_on = [
-#     module.springapps_enterprise_svc
-#   ]
-# }
+module "apps-enterprise" {
+  source = "../springappsapp"
+  count = length(var.apps)
+  needs_identity = var.apps[count.index].needs_identity
+  app_name = var.apps[count.index].app_name
+  resource_group = azurerm_resource_group.rg.name
+  spring_cloud_service_name = local.app_name
+  is_public = var.apps[count.index].is_public
+  environment_variables = var.environment_variables
+  vault_id = module.keyvault.kv_id
+  needs_custom_domain = var.apps[count.index].needs_custom_domain
+  dns_name = var.dns_name
+  cert_name = var.cert_name
+  thumbprint = module.springapps_enterprise_svc.thumbprint
+  depends_on = [
+    module.springapps_enterprise_svc
+  ]
+}
 
 module "appgw" {
   source = "../appgw"

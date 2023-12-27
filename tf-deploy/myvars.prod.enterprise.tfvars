@@ -21,7 +21,7 @@ regions = [{
     }
 }]
 
-variable "enterprise" {
+enterprise = {
   enabled = true
   service_registry_enabled = false
   build_agent_pool_size = "S2"

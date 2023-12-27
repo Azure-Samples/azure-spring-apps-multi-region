@@ -90,7 +90,7 @@ resource "azurerm_cdn_frontdoor_custom_domain" "custom_domain" {
   cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.profile.id
   host_name                = var.dns_name
 
-  associate_with_cdn_frontdoor_route_id = azurerm_cdn_frontdoor_route.route.id
+#  associate_with_cdn_frontdoor_route_id = azurerm_cdn_frontdoor_route.route.id
 
   tls {
     certificate_type    = "CustomerCertificate"
