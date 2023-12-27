@@ -19,7 +19,7 @@ module "monitoring" {
   asa_name = local.app_name
   resource_group = azurerm_resource_group.rg.name
   location = var.location
-  asa_service_id = var.enterprise.enabled ? module.springapps_enterprise_svc.service_id : module.springapps_svc.service_id
+  asa_service_id = var.enterprise.enabled ? module.springapps_enterprise_svc[0].service_id : module.springapps_svc[0].service_id
 }
 
 module "springapps_svc" {

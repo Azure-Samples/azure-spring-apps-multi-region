@@ -22,14 +22,27 @@ resource "azurerm_spring_cloud_configuration_service" "asa_config_svc" {
   name                    = "default"
   spring_cloud_service_id = azurerm_spring_cloud_service.asa.id
 
-  repository {
-    name     = var.config_server_git_setting.name
-    label    = var.config_server_git_setting.label
-    patterns = var.config_server_git_setting.patterns
-    uri      = var.config_server_git_setting.uri
+  dynamic repository {
+    for_each = var.config_server_git_setting.http_basic_auth.username == "" ? [] : [1]
+    content {
+      name     = var.config_server_git_setting.name
+      label    = var.config_server_git_setting.label
+      patterns = var.config_server_git_setting.patterns
+      uri      = var.config_server_git_setting.uri
 
-    username = var.config_server_git_setting.http_basic_auth.username
-    password = var.git_repo_password
+      username = var.config_server_git_setting.http_basic_auth.username
+      password = var.git_repo_password    
+    }
+  }
+
+  dynamic repository {
+    for_each = var.config_server_git_setting.http_basic_auth.username == "" ? [1] : []
+    content {
+      name     = var.config_server_git_setting.name
+      label    = var.config_server_git_setting.label
+      patterns = var.config_server_git_setting.patterns
+      uri      = var.config_server_git_setting.uri  
+    }
   }
 }
 

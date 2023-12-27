@@ -4,9 +4,9 @@ regions = [{
     config_server_git_setting = {
       uri          = "https://github.com/spring-petclinic/spring-petclinic-microservices-config.git"
       label        = "master"
+      name = "spring-petclinic-config"
+      patterns = ["api-gateway","customers-service","vets-service","visits-service","admin-server"]
     }
-    name = "spring-petclinic-config"
-    patterns = "api-gateway,customers-service,vets-service,visits-service,admin-server"
   },
   {
     location = "eastus"
@@ -14,9 +14,9 @@ regions = [{
     config_server_git_setting = {
       uri          = "https://github.com/spring-petclinic/spring-petclinic-microservices-config.git"
       label        = "master"
+      name = "spring-petclinic-config"
+      patterns = ["api-gateway","customers-service","vets-service","visits-service","admin-server"]
     }
-    name = "spring-petclinic-config"
-    patterns = "api-gateway,customers-service,vets-service,visits-service,admin-server"
 }]
 
 enterprise = {

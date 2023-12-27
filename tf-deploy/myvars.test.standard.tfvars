@@ -4,9 +4,9 @@ regions = [{
     config_server_git_setting = {
       uri          = "https://github.com/spring-petclinic/spring-petclinic-microservices-config.git"
       label        = "master"
+      name = "default"
+      patterns = []  
     }
-    name = "default"
-    patterns = ""
   },
   {
     location = "eastus"
@@ -14,9 +14,9 @@ regions = [{
     config_server_git_setting = {
       uri          = "https://github.com/spring-petclinic/spring-petclinic-microservices-config.git"
       label        = "master"
-    }
-    name = "default"
-    patterns = ""
+      name = "default"
+      patterns = []    
+  }
 }]
 
 dns_name = "sampleapp.yourdomain.com"

@@ -7,9 +7,9 @@ regions = [{
       http_basic_auth = {
         username = "your-github-username"
       }
+      name = "spring-petclinic-config"
+      patterns = ["api-gateway","customers-service","vets-service","visits-service","admin-server"]
     }
-    name = "spring-petclinic-config"
-    patterns = "api-gateway,customers-service,vets-service,visits-service,admin-server"
   },
   {
     location = "eastus"
@@ -20,9 +20,9 @@ regions = [{
       http_basic_auth = {
         username = "your-github-username"
       }
+      name = "spring-petclinic-config"
+      patterns = ["api-gateway","customers-service","vets-service","visits-service","admin-server"]
     }
-    name = "spring-petclinic-config"
-    patterns = "api-gateway,customers-service,vets-service,visits-service,admin-server"
 }]
 
 enterprise = {

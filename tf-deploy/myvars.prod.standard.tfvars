@@ -7,9 +7,9 @@ regions = [{
       http_basic_auth = {
         username = "your-github-username"
       }
+      name = "default"
+      patterns = []
     }
-    name = "default"
-    patterns = ""
   },
   {
     location = "eastus"
@@ -20,9 +20,9 @@ regions = [{
       http_basic_auth = {
         username = "your-github-username"
       }
+      name = "default"
+      patterns = []
     }
-    name = "default"
-    patterns = ""
 }]
 
 dns_name = "sampleapp.yourdomain.com"
