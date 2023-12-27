@@ -8,6 +8,8 @@ regions = [{
         username = "your-github-username"
       }
     }
+    name = "default"
+    patterns = ""
   },
   {
     location = "eastus"
@@ -19,6 +21,8 @@ regions = [{
         username = "your-github-username"
       }
     }
+    name = "default"
+    patterns = ""
 }]
 
 dns_name = "sampleapp.yourdomain.com"

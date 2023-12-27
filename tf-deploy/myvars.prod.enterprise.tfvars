@@ -8,6 +8,8 @@ regions = [{
         username = "your-github-username"
       }
     }
+    name = "spring-petclinic-config"
+    patterns = "api-gateway,customers-service,vets-service,visits-service,admin-server"
   },
   {
     location = "eastus"
@@ -19,6 +21,8 @@ regions = [{
         username = "your-github-username"
       }
     }
+    name = "spring-petclinic-config"
+    patterns = "api-gateway,customers-service,vets-service,visits-service,admin-server"
 }]
 
 enterprise = {

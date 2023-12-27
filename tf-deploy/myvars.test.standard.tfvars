@@ -5,6 +5,8 @@ regions = [{
       uri          = "https://github.com/spring-petclinic/spring-petclinic-microservices-config.git"
       label        = "master"
     }
+    name = "default"
+    patterns = ""
   },
   {
     location = "eastus"
@@ -13,6 +15,8 @@ regions = [{
       uri          = "https://github.com/spring-petclinic/spring-petclinic-microservices-config.git"
       label        = "master"
     }
+    name = "default"
+    patterns = ""
 }]
 
 dns_name = "sampleapp.yourdomain.com"

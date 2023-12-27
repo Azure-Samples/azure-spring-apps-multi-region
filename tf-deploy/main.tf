@@ -18,6 +18,10 @@ provider "azurerm" {
   features {}
 }
 
+provider "azuread" {
+
+}
+
 locals {
   application_name = "${var.application_name}-${lower(random_string.rand-name.result)}"
 }
