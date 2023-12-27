@@ -15,7 +15,7 @@ cd azure-spring-apps-multi-region
 
 ## 2. Review the tfvars file
 
-The [variables.tf](../tf-deploy/variables.tf) and [myvars.prod.tfvars](../tf-deploy/myvars.prod.tfvars) files in the tf-deploy directory contain the different variables you can configure. Update any values in the myvars.prod.tfvars file to reflect the environment you would like to build. See [variables.md](variables.md) for an explanation of the different variables you can configure.
+The [variables.tf](../tf-deploy/variables.tf) and [myvars.prod.standard.tfvars](../tf-deploy/myvars.prod.standard.tfvars) files in the tf-deploy directory contain the different variables you can configure. Update any values in the myvars.prod.standard.tfvars file to reflect the environment you would like to build. See [variables.md](variables.md) for an explanation of the different variables you can configure.
 
 Some of the variables are secret values, it is better to create environment variables for these and pass them along through the command line instead of putting them in the tfvars file.
 
@@ -36,7 +36,7 @@ az login
 cd tf-deploy
 
 terraform init -upgrade
-terraform plan -var-file="myvars.prod.tfvars" -out=plan.tfplan -var='git_repo_passwords=["$GIT_REPO_PASSWORD","$GIT_REPO_PASSWORD"]' -var="cert_password=$CERT_PASSWORD"
+terraform plan -var-file="myvars.prod.standard.tfvars" -out=plan.tfplan -var='git_repo_passwords=["$GIT_REPO_PASSWORD","$GIT_REPO_PASSWORD"]' -var="cert_password=$CERT_PASSWORD"
 terraform apply -auto-approve plan.tfplan
 ```
 
@@ -68,7 +68,7 @@ In case you want to deploy the spring petclinic micorservices application to you
 To remove all the resources you have set up, run the below statement: 
 
 ```bash
-terraform destroy -var-file="myvars.prod.tfvars" -var='git_repo_passwords=["$GIT_REPO_PASSWORD","$GIT_REPO_PASSWORD"]' -var="cert_password=$CERT_PASSWORD"
+terraform destroy -var-file="myvars.prod.standard.tfvars" -var='git_repo_passwords=["$GIT_REPO_PASSWORD","$GIT_REPO_PASSWORD"]' -var="cert_password=$CERT_PASSWORD"
 ```
 
 ## Additional prerequisites

@@ -14,7 +14,7 @@ cd azure-spring-apps-multi-region
 
 ## 2. Review the tfvars file
 
-The [variables.tf](../tf-deploy/variables.tf) and [myvars.test.tfvars](../tf-deploy/myvars.test.tfvars) files in the tf-deploy directory contain the different variables you can configure. Update any values in the myvars.test.tfvars file to reflect the environment you would like to build. See [variables.md](variables.md) for an explanation of the different variables you can configure.
+The [variables.tf](../tf-deploy/variables.tf) and [myvars.test.standard.tfvars](../tf-deploy/myvars.test.standard.tfvars) files in the tf-deploy directory contain the different variables you can configure. Update any values in the myvars.test.tfvars file to reflect the environment you would like to build. See [variables.md](variables.md) for an explanation of the different variables you can configure.
 
 ## 3. Log in to your Azure environment
 
@@ -28,7 +28,7 @@ az login
 cd tf-deploy
 
 terraform init -upgrade
-terraform plan -var-file="myvars.test.tfvars" -out=plan.tfplan
+terraform plan -var-file="myvars.test.standard.tfvars" -out=plan.tfplan
 terraform apply -auto-approve plan.tfplan
 ```
 
@@ -45,5 +45,5 @@ In case you want to deploy the spring petclinic micorservices application to you
 To remove all the resources you have set up, run the below statement: 
 
 ```bash
-terraform destroy -var-file="myvars.test.tfvars"
+terraform destroy -var-file="myvars.test.standard.tfvars"
 ```
