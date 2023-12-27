@@ -57,7 +57,7 @@ Once the domain has been verified, you can connect to your application through y
 
 ## 6. Test your setup
 
-You can test your setup by going to your app through your custom domain in the browser. You should see the "Hurray~Your app is up and running!" page. 
+You can test your setup by going to your app through your custom domain in the browser. You should see the "Hurray~Your app is up and running!" page. It might be you need to refresh the page a couple of times to see this page. 
 
 ## 7. Extra: Deploying the Spring Petclinic application
 

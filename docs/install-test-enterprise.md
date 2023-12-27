@@ -34,7 +34,7 @@ terraform apply -auto-approve plan.tfplan
 
 ## 5. Test your setup
 
-You can test your setup by going to your app through your Front door hostname in the browser. The hostname is part of the Terraform output. You should see the "Hurray~Your app is up and running!" page. 
+You can test your setup by going to your app through your Front door hostname in the browser. The hostname is part of the Terraform output. You should see the "Hurray~Your app is up and running!" page. It might be you need to refresh the page a couple of times to see this page. 
 
 ## 6. Extra: Deploying the Spring Petclinic application
 
