@@ -42,10 +42,13 @@ When using the dev container, either make sure you have [GitHub Codespaces](http
 
 ### Installation
 
-This sample can be set up in a test or a non-test setup.
+This sample can be set up in a test or a non-test setup and for Standard or Enterprise SKU.
 
-- [test set up]: In this case the Git PAT token is optional and a self-signed certificate is used. Walkthrough of this setup is found in the [install-test.md](docs/install-test.md) file.
-- [non-test set up]: In this case the Git PAT token is mandatory and a pfx certificate for your custom domain is used. Walkthrough of this setup is found in the [install-prod.md](docs/install-prod.md) file.
+- [test set up, Standard SKU]: In this case the Git PAT token is optional and a self-signed certificate is used. Walkthrough of this setup is found in the [install-test-standard.md](docs/install-test-standard.md) file.
+- [test set up, Enterprise SKU]: In this case the Git PAT token is optional and a self-signed certificate is used. Walkthrough of this setup is found in the [install-test-enterprise.md](docs/install-test-enterprise.md) file.
+- [non-test set up, Standard SKU]: In this case the Git PAT token is mandatory and a pfx certificate for your custom domain is used. Walkthrough of this setup is found in the [install-prod-standard.md](docs/install-prod-standard.md) file.
+- [non-test set up, Enterprise SKU]: In this case the Git PAT token is mandatory and a pfx certificate for your custom domain is used. Walkthrough of this setup is found in the [install-prod-enterprise.md](docs/install-prod-enterprise.md) file.
+
 
 ### What you need to know about this setup
 
