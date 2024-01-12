@@ -4,6 +4,11 @@ regions = [{
     config_server_git_setting = {
       uri          = "https://github.com/spring-petclinic/spring-petclinic-microservices-config.git"
       label        = "master"
+      http_basic_auth = {
+        username = "your-github-username"
+      }
+      name = "spring-petclinic-config"
+      patterns = ["api-gateway","customers-service","vets-service","visits-service","admin-server"]
     }
   },
   {
@@ -12,12 +17,24 @@ regions = [{
     config_server_git_setting = {
       uri          = "https://github.com/spring-petclinic/spring-petclinic-microservices-config.git"
       label        = "master"
+      http_basic_auth = {
+        username = "your-github-username"
+      }
+      name = "spring-petclinic-config"
+      patterns = ["api-gateway","customers-service","vets-service","visits-service","admin-server"]
     }
 }]
 
+enterprise = {
+  enabled = true
+  service_registry_enabled = false
+  build_agent_pool_size = "S2"
+}
+
 dns_name = "sampleapp.yourdomain.com"
 
-use_self_signed_cert = true
+use_self_signed_cert = false
+cert_path = "../wildcard_yourdomain_com.pfx"
 
 apps = [
   {
@@ -53,5 +70,5 @@ apps = [
 ]
 
 environment_variables = {
-  SPRING_PROFILES_ACTIVE     = "mysql"
+  "SPRING_PROFILES_ACTIVE"     = "mysql"
 }

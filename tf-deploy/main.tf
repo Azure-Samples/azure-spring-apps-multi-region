@@ -4,7 +4,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "=3.25.0"
+      version = "=3.85.0"
     }
     azuread = {
       source  = "hashicorp/azuread"
@@ -16,6 +16,10 @@ terraform {
 # Configure the Microsoft Azure Provider
 provider "azurerm" {
   features {}
+}
+
+provider "azuread" {
+
 }
 
 locals {
@@ -36,6 +40,7 @@ module "region" {
   application_name = local.application_name
   location = each.value.location
   location-short = each.value.location-short
+  enterprise = var.enterprise
 
   dns_name = var.dns_name
   cert_name = var.cert_name

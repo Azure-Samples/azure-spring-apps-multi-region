@@ -10,25 +10,43 @@ resource "azurerm_spring_cloud_app" "app" {
         type = "SystemAssigned"
     }
   }
+
+  addon_json = jsonencode({
+    applicationConfigurationService = {
+      resourceId = var.asa_config_svc_id
+    }
+  })    
 }
 
-resource "azurerm_spring_cloud_java_deployment" "deployment" {
-  name                = "default"
+# Create ASA Apps Deployment
+resource "azurerm_spring_cloud_build_deployment" "deployment" {
+  name = "default"
   spring_cloud_app_id = azurerm_spring_cloud_app.app.id
-  instance_count      = 1
-  runtime_version     = "Java_17"
+  build_result_id = "<default>"
 
   quota {
     cpu    = "1"
     memory = "1Gi"
   }
-
-  environment_variables = var.environment_variables
 }
+
+# resource "azurerm_spring_cloud_java_deployment" "deployment" {
+#   name                = "default"
+#   spring_cloud_app_id = azurerm_spring_cloud_app.app.id
+#   instance_count      = 1
+#   runtime_version     = "Java_17"
+
+#   quota {
+#     cpu    = "1"
+#     memory = "1Gi"
+#   }
+
+#   environment_variables = var.environment_variables
+# }
 
 resource "azurerm_spring_cloud_active_deployment" "active-deployment" {
   spring_cloud_app_id = azurerm_spring_cloud_app.app.id
-  deployment_name     = azurerm_spring_cloud_java_deployment.deployment.name
+  deployment_name     = azurerm_spring_cloud_build_deployment.deployment.name
 }
 
 data "azurerm_client_config" "current" {}

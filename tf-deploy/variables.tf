@@ -9,14 +9,30 @@ variable "regions" {
     location = string
     location-short = string
     config_server_git_setting = object({
+      name         = string
       uri          = string
       label        = optional(string)
+      patterns     = list(string) 
       http_basic_auth = optional(object ({
         username = string
       }), {username = ""})
     })
   }))
   description = "the regions you want the Azure Spring Apps backends to be deployed to."
+}
+
+variable "enterprise" {
+  type = object({
+    enabled = bool
+    service_registry_enabled = bool
+    build_agent_pool_size = string
+  })
+  description = "When true deploys enterprise SKU in all regions"
+  default = {
+    enabled = false
+    service_registry_enabled = false
+    build_agent_pool_size = "S2"
+  }
 }
 
 variable "apps" {

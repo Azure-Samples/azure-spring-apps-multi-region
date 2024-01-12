@@ -13,6 +13,15 @@ variable "location-short" {
   description = "The short name of the Azure region where all resources in this example should be created in. Used for creating unique resource names"
 }
 
+variable "enterprise" {
+  type = object({
+    enabled = bool
+    service_registry_enabled = bool
+    build_agent_pool_size = string
+  })
+  description = "When true deploys enterprise SKU in all regions"
+}
+
 variable "dns_name" {
   type = string
 }
@@ -37,11 +46,13 @@ variable "cert_password" {
 
 variable "config_server_git_setting" {
   type = object ({
+    name         = string
     uri          = string
     label        = optional(string)
     http_basic_auth = optional(object({
       username = string
     }))
+    patterns     = list(string) 
   })
   description = "the regions you want the Azure Spring Apps backends to be deployed to."
 }

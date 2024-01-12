@@ -14,18 +14,46 @@ module "vnet" {
   location = var.location
 }
 
+module "monitoring" {
+  source = "../monitoring"
+  asa_name = local.app_name
+  resource_group = azurerm_resource_group.rg.name
+  location = var.location
+  asa_service_id = var.enterprise.enabled ? module.springapps_enterprise_svc[0].service_id : module.springapps_svc[0].service_id
+}
+
 module "springapps_svc" {
   source = "../springapps"
+  count = var.enterprise.enabled ? 0 : 1
   resource_group = azurerm_resource_group.rg.name
   asa_name = local.app_name
   location = var.location
   app_subnet_id = module.vnet.app_subnet_id
   svc_subnet_id = module.vnet.svc_subnet_id
+  appinsights = module.monitoring.connection_string
   config_server_git_setting = var.config_server_git_setting
   git_repo_password = var.git_repo_password
   virtual_network_id = module.vnet.vnet_id
   cert_id = module.keyvault.cert_id
   cert_name = var.cert_name
+}
+
+module "springapps_enterprise_svc" {
+  source = "../springapps-enterprise"
+  count = var.enterprise.enabled ? 1 : 0
+  resource_group = azurerm_resource_group.rg.name
+  asa_name = local.app_name
+  location = var.location
+  app_subnet_id = module.vnet.app_subnet_id
+  svc_subnet_id = module.vnet.svc_subnet_id
+  appinsights = module.monitoring.connection_string
+  config_server_git_setting = var.config_server_git_setting
+  git_repo_password = var.git_repo_password
+  virtual_network_id = module.vnet.vnet_id
+  cert_id = module.keyvault.cert_id
+  cert_name = var.cert_name
+  service_registry_enabled = var.enterprise.service_registry_enabled
+  build_agent_pool_size = var.enterprise.build_agent_pool_size
 }
 
 module "database" {
@@ -58,7 +86,7 @@ module "keyvault" {
 
 module "apps" {
   source = "../springappsapp"
-  count = length(var.apps)
+  count = var.enterprise.enabled ? 0 : length(var.apps)
   needs_identity = var.apps[count.index].needs_identity
   app_name = var.apps[count.index].app_name
   resource_group = azurerm_resource_group.rg.name
@@ -69,9 +97,29 @@ module "apps" {
   needs_custom_domain = var.apps[count.index].needs_custom_domain
   dns_name = var.dns_name
   cert_name = var.cert_name
-  thumbprint = module.springapps_svc.thumbprint
+  thumbprint = module.springapps_svc[0].thumbprint
   depends_on = [
     module.springapps_svc
+  ]
+}
+
+module "apps-enterprise" {
+  source = "../springappsapp-enterprise"
+  count = var.enterprise.enabled ? length(var.apps) : 0
+  needs_identity = var.apps[count.index].needs_identity
+  app_name = var.apps[count.index].app_name
+  resource_group = azurerm_resource_group.rg.name
+  spring_cloud_service_name = local.app_name
+  is_public = var.apps[count.index].is_public
+  environment_variables = var.environment_variables
+  vault_id = module.keyvault.kv_id
+  needs_custom_domain = var.apps[count.index].needs_custom_domain
+  dns_name = var.dns_name
+  cert_name = var.cert_name
+  thumbprint = module.springapps_enterprise_svc[0].thumbprint
+  asa_config_svc_id = module.springapps_enterprise_svc[0].asa_config_svc_id
+  depends_on = [
+    module.springapps_enterprise_svc
   ]
 }
 
